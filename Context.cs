@@ -8,7 +8,7 @@ public class Context
     /// <summary>Cap for regeneration and "full" display. New cells start at InitialFoodPerCell.</summary>
     public const float MaxFood = 100f;
     /// <summary>Food amount when a cell is first added (EnsureCellHasFood).</summary>
-    public const float InitialFoodPerCell = 0f;
+    public const float InitialFoodPerCell = 10f;
     public const float SecondsPerFood = 5f;
 
     public List<Particle> Particles { get; } = new();
