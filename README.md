@@ -14,7 +14,7 @@ dotnet run
 Optional arguments:
 
 ```bash
-dotnet run -- --seed 12345              # Reproducible run with seed 12345
+dotnet run -- --seed 12345              # Somwhat reproducable run with seed 12345
 dotnet run -- --genome neural           # Use neural genome (see Genome types)
 dotnet run 12345                        # Seed only (bare integer)
 dotnet run -- --seed 42 --genome deep   # Combine options
