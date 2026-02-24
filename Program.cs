@@ -405,10 +405,13 @@ while (!Raylib.WindowShouldClose())
     int seedDrawX = w - seedW - 12;
     bool seedHighlight = (float)Raylib.GetTime() < seedHighlightUntil;
     Raylib.DrawText(seedText, seedDrawX, 12, 18, seedHighlight ? Color.Lime : new Color(200, 200, 200, 255));
+    string genomeText = $"Genome: {genomeType ?? "particlegene"}";
+    int genomeW = Raylib.MeasureText(genomeText, 14);
+    Raylib.DrawText(genomeText, w - genomeW - 12, 34, 14, new Color(200, 200, 200, 255));
     int fps = Raylib.GetFPS();
     string fpsText = $"{fps} FPS";
     int fpsW = Raylib.MeasureText(fpsText, 20);
-    Raylib.DrawText(fpsText, w - fpsW - 12, 32, 20, new Color(200, 200, 200, 255));
+    Raylib.DrawText(fpsText, w - fpsW - 12, 52, 20, new Color(200, 200, 200, 255));
 
     Raylib.EndDrawing();
 }
