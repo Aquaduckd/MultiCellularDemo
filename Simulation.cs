@@ -49,6 +49,9 @@ public class Simulation
 
     private Context context = new();
 
+    /// <summary>Canonical genome type for this run (e.g. "neural", "deep", "chemistry", "particlegene"). Use for UI.</summary>
+    public string GenomeDisplayName { get; }
+
     public List<Particle> Particles => context.Particles;
 
     /// <summary>Number of births in the last Update.</summary>
@@ -131,33 +134,42 @@ public class Simulation
         return x1 > 0 && x0 < MapSize && y1 > 0 && y0 < MapSize;
     }
 
-    /// <summary>Create a new genome of the given type (e.g. "neural", "deep", "particlegene", "chemistry"). Defaults to particlegene if unknown.</summary>
-    static GenomeBase CreateGenome(string? genomeType)
+    /// <summary>Resolve user-entered genome type to canonical name used for creation and display. Single source of truth.</summary>
+    static string ResolveGenomeType(string? userInput)
     {
-        switch (genomeType?.ToLowerInvariant())
+        switch (userInput?.ToLowerInvariant())
         {
-            case "neural":
-                return new NeuralGenome();
+            case "neural": return "neural";
             case "deep":
-            case "deepneural":
-                return new DeepNeuralGenome();
-            case "chemistry":
-                return new ChemistryGenome();
+            case "deepneural": return "deep";
+            case "chemistry": return "chemistry";
             case "particlegene":
             case "gene":
-            default:
-                return new ParticleGeneGenome();
+            default: return "particlegene";
         }
+    }
+
+    /// <summary>Create a new genome of the given canonical type ("neural", "deep", "chemistry", "particlegene").</summary>
+    static GenomeBase CreateGenome(string resolvedType)
+    {
+        return resolvedType switch
+        {
+            "neural" => new NeuralGenome(),
+            "deep" => new DeepNeuralGenome(),
+            "chemistry" => new ChemistryGenome(),
+            _ => new ParticleGeneGenome()
+        };
     }
 
     public Simulation(float width = MapSize, float height = MapSize, string? genomeType = null)
     {
+        GenomeDisplayName = ResolveGenomeType(genomeType);
         var rng = RunRng;
         for (int i = 0; i < PopulationCap; i++)
         {
             float x = (float)rng.NextDouble() * width;
             float y = (float)rng.NextDouble() * height;
-            var genome = CreateGenome(genomeType);
+            var genome = CreateGenome(GenomeDisplayName);
             genome.InitializeRandom();
             context.Particles.Add(new Particle(new Vector2(x, y), genome, 1));
         }
