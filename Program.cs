@@ -28,6 +28,7 @@ static Color HueToColor(float hDeg)
 }
 
 Raylib.InitWindow(1280, 720, "Multi-Cellular Demo");
+Raylib.SetWindowState(ConfigFlags.ResizableWindow);
 Raylib.SetTargetFPS(60);
 
 int runSeed = Environment.TickCount;
