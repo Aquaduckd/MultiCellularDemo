@@ -24,7 +24,7 @@ public class Simulation
         _runRng = new Random(seed);
     }
 
-    public const float MapSize = 10000f;
+    public const float MapSize = 20000f;
     public static Vector2 MapCenter => new(MapSize * 0.5f, MapSize * 0.5f);
     /// <summary>When selecting a particle for the camera, only consider particles at least this far from the map border (ensures selection stays on map).</summary>
     public const float MinCameraSelectionBorderDistance = 500f;
